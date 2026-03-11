@@ -1,0 +1,7 @@
+OB01-Tarjeta_Clase_Teoria-Tarjeta con banda magnética que permite abrir el aula de teoría C0-01
+OB02-Llave_Biblioteca-Llave antigua que sirve para abrir la biblioteca de la ESI-07
+OB03-Tarjeta_Cafeteria-Tarjeta con banda magnética que permite abrir la cafetería de la ESI-03
+OB04-Tarjeta_Clase_Practicas-Tarjeta con banda magnética que permite abrir el aula de practicas del pasillo E1-04
+OB05-Llave_Consejeria-Antigua llave que un trabajador se ha olvidado en este aula, sirve para abrir la consejería de la ESI en la planta de abajo-02
+OB06-Llave_Salon_Actos-Llave que permite abrir el salón de actos de la ESI situado continuando el pasillo-12
+OB07-Llave_Exterior-La llave final para poder escapar de la universidad utilízala en la puerta que veas conveniente-05
