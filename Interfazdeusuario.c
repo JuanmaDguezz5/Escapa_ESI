@@ -1,12 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 int main() {
-    printf("\n");
-    printf("  _____  ____  ___     ____   ____    _    ____  _____ \n");
-    printf(" | ____|/ ___||_ _|   / ___| / ___|  / \\  |  _ \\| ____|\n");
-    printf(" |  _|  \\___ \\ | |    \\___ \\| |     / _ \\ | |_) |  _|  \n");
-    printf(" | |___  ___) || |     ___) | |___ / ___ \\|  __/| |___ \n");
-    printf(" |_____||____/|___|   |____/ \\____/_/   \\_\\_|   |_____|\n");
+    printf("\n\n");
+    printf("  _____  ____  ___     ____   ____     _      ____   _____ \n");
+    printf(" | ____|/ ___||_ _|   / ___| / ___|   / \\    |  _ \\ | ____|\n");
+    printf(" |  _|  \\___ \\ | |    \\___ \\| |      / _ \\   | |_) ||  _|  \n");
+    printf(" | |___  ___) || |     ___) | |___  / ___ \\  |  __/ | |___ \n");
+    printf(" |_____||____/|___|   |____/ \\____|/_/   \\_\\ |_|    |_____|\n");
     printf("\n");
     printf("                  =================\n");
     printf("                   BIENVENIDO/A\n");
@@ -18,25 +18,54 @@ int main() {
     printf("3. Salir\n");
 
     int opcion;
+    int opcion2;
+    int k;
     scanf("%d", &opcion);
 
     switch (opcion) {
         case 1:
-            printf("Registrate:\n");
-            //función para registrarse
-            registrarUsuario();
-            break;
+            printf("1. Registrate:\n");
+            printf("2. Inicia Sesion:\n");
+                 
+                do {
+                    k=0;
+                    scanf("%d", &opcion2);
+
+                        switch (opcion2) {
+
+                        case 1:
+                            printf("Registrate:\n");
+                            registrarUsuario();
+                            //función para registrarse
+                        break;
+                        case 2:
+                            printf("Inicia Sesion:\n");
+                            iniciarSesion();
+                            //funcion para iniciar sesion
+                        break;
+                        default:
+                            printf("Opcion no valida, introduzca una opcion valida\n");
+                            k++;
+                            fflush(stdin);
+                        break;
+                }}
+                    while (k!=0);
+
+                        
+                    
+        break; 
+                  
         case 2:
-            printf("Iniciar Sesión:\n");
-            //función para iniciar sesión
-            iniciarSesion();
+            printf("Inicia Sesion:\n");
+                    iniciarSesion();
+                //función para iniciar sesión
             break;
         case 3:
             printf("Saliendo...\n");
             return 0;
             break;
         default:
-            printf("Opción no válida\n");
+            printf("Opcion no valida\n");
             break;
     }
 
@@ -76,4 +105,6 @@ int registrarUsuario() {
     printf("Inicio de sesion exitoso\n");
     return 0;
     }
+   
+    
    
