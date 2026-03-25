@@ -3,6 +3,21 @@
 #include <string.h>
 
 typedef struct {
+    int id_jugador;
+    int id_sala;
+    int id_obj;     // Objeto: Id_obj, Localizacion)
+    int id_conexion; // Conexion: Id_conexion, Estado)
+} partida;
+
+typedef struct {
+    int id_jugador[3]; 
+    char Nomb_jugador[21]; // Nombre completo
+    char jugador[11];       // Nombre de usuario
+    char contrasenia[9];
+    int id_obj;     // ID del objeto que posee el jugador, 0 si no tiene ninguno, tantos codigos como objetos posea    
+} jugadores;
+
+typedef struct {
     char id_puzle[4];      
     char nombre[16];       
     int id_sala;          
@@ -10,7 +25,7 @@ typedef struct {
     char descripcion[151]; 
     char solucion[51];     
     int resuelto;          // 0 para Pendiente, 1 para Resuelto 
-} Puzle;
+} puzle;
 
 typedef struct {
     char id_objeto[5];       
