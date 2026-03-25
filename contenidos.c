@@ -3,6 +3,8 @@
 #include <string.h>
 
 #include "contenidos.h"
+
+
 /**
  * Muestra la información de la sala actual y verifica la victoria.
  *  {Pre}  salaActual != NULL. El puntero debe apuntar a una sala válida.
@@ -35,7 +37,7 @@ void describirSala(salas *salaActual) {
 void interactuarPuzle(Puzle *puzleActual, conexiones *conexionesJuego, int numConexiones){
 
     char respuestaUsuario[50];
-    //1. Mostrar el acertijo
+    //1. Mostrar el puzle al usuario
     printf("RETO: %s \n", puzleActual->descripcion);
     //2. Solicitar la respuesta al usuario
     printf("Introduce tu respuesta: ");
@@ -124,4 +126,5 @@ int main() {
 
    return 0;
 }
+
 
