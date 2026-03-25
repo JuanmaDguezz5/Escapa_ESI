@@ -1,5 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+int registrarUsuario();
+int iniciarSesion();
+
 int main() {
     printf("\n\n");
     printf("  _____  ____  ___     ____   ____     _      ____   _____ \n");
@@ -48,8 +52,8 @@ int main() {
                             k++;
                             fflush(stdin);
                         break;
-                }}
-                    while (k!=0);
+                }
+            } while (k!=0);
 
                         
                     
