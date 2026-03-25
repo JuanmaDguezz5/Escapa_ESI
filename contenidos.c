@@ -5,7 +5,7 @@
 #include "contenidos.h"
 /**
  * Muestra la información de la sala actual y verifica la victoria.
- *  {Pre}  salaActual != NULL. El puntero debe apuntar a una sala válida cargada en memoria.
+ *  {Pre}  salaActual != NULL. El puntero debe apuntar a una sala válida.
  * {Post} Se imprime por pantalla el nombre y la descripción de la sala. 
  * Si el tipo de sala es "SALIDA", se muestra el mensaje de victoria.
  */
