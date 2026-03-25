@@ -16,7 +16,7 @@ typedef struct {
     char Nomb_jugador[21]; // Nombre completo
     char jugador[11];       // Nombre de usuario
     char contrasenia[9];
-    int id_obj;     // ID del objeto que posee el jugador, 0 si no tiene ninguno, tantos codigos como objetos posea    
+    objetos inventario[10];     // ID del objeto que posee el jugador, 0 si no tiene ninguno, tantos codigos como objetos posea    
 } jugadores;
 
 typedef struct {
@@ -33,8 +33,8 @@ typedef struct {
     char id_objeto[5];       
     char nombre[16];       
     char descripcion[151];
-    char lugar[11];         //Id_sala o Inventario 
-} objeto;
+    int lugar;         //Id_sala o Inventario 
+} objetos;
 
 typedef struct {
     char id_conexion[4];       
