@@ -10,7 +10,7 @@ typedef struct {
 } partida;
 
 typedef struct {
-    int id_jugador[3]; 
+    int id_jugador; 
     char Nomb_jugador[21]; // Nombre completo
     char jugador[11];       // Nombre de usuario
     char contrasenia[9];
@@ -43,7 +43,7 @@ typedef struct {
 } conexiones;
 
 typedef struct {
-    char id_sala[4];       
+    int id_sala;       
     char nombre[16];       
     char Tipo[11]; //Inicial, normal o salida
     char descripcion[151];
