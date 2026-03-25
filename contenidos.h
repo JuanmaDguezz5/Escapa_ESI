@@ -4,9 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "estructuras.h"
-
-
 // Muestra la descripción de la sala y verifica si es la SALIDA 
 void describirSala(salas *salaActual); 
 
