@@ -22,7 +22,7 @@ void describirSala(salas *salaActual) {
     printf("%s\n", salaActual->descripcion);
 
     //Comprobar si la sala es la SALIDA
-    if (strcmp(salaActual->Tipo, "salida") == 0) {
+    if (strcmp(salaActual->Tipo, "SALIDA") == 0) {
         printf("¡Has encontrado la salida! ¡Felicidades!\n");
     }
 }
@@ -120,11 +120,5 @@ void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conex
     }
 
 
-
-int main() {
-
-
-   return 0;
-}
 
 
