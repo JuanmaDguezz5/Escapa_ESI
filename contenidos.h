@@ -78,4 +78,6 @@ puzle* inicializarPuzles(int numPuzles);
 // Función para liberar la memoria al final del juego
 void liberarMemoriaContenidos(salas *arraySalas, objeto *arrayObjetos, conexiones *arrayConexiones, puzle *arrayPuzles);
 
+Void mostrar_inventario(objeto *listaObjetos, int numObjetos);
+
 #endif
