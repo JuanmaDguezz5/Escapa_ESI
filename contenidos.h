@@ -24,7 +24,7 @@ typedef struct {
     char Nomb_jugador[21]; // Nombre completo
     char jugador[11];       // Nombre de usuario
     char contrasenia[9];
-    objetos inventario[10];     // ID del objeto que posee el jugador, 0 si no tiene ninguno, tantos codigos como objetos posea    
+    objeto inventario[10];     // ID del objeto que posee el jugador, 0 si no tiene ninguno, tantos codigos como objetos posea    
 } jugadores;
 
 typedef struct {
@@ -71,7 +71,7 @@ void usarObjeto(objeto *listaObjetos, int numObjetos, conexiones *listaConexione
 void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones);
 // Funciones de Inicialización de Memoria Dinámica
 salas* inicializarSalas(int numSalas);
-objetos* inicializarObjetos(int numObjetos);
+objeto* inicializarObjetos(int numObjetos);
 conexiones* inicializarConexiones(int numConexiones);
 puzle* inicializarPuzles(int numPuzles);
 
