@@ -55,21 +55,28 @@ typedef struct {
 // Muestra la descripción de la sala y verifica si es la SALIDA 
 void describirSala(salas *salaActual); 
 
-// Permite resolver un puzle mediante código o palabra 
-void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones);
+// Lista objetos y salidas indicando si están bloqueadas o abiertas
+void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones);
 
 // Traslada un objeto de la sala al inventario 
 void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado);
 
-// Pasa un objeto del inventario a la sala actual
-void soltarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, char *idObjBuscado);
-
 // Usa un objeto del inventario para abrir una conexión bloqueada adyacente
 void usarObjeto(objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, salas *salaActual, char *idObjBuscado);
 
-// Lista objetos y salidas indicando si están bloqueadas o abiertas
-void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones);
+// Pasa un objeto del inventario a la sala actual
+void soltarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, char *idObjBuscado);
+
+// Muestra el inventario del jugador
+void mostrar_inventario(objeto *listaObjetos, int numObjetos);
+
+// Permite resolver un puzle mediante código o palabra 
+void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones);
+
+
+
 // Funciones de Inicialización de Memoria Dinámica
+
 salas* inicializarSalas(int numSalas);
 objeto* inicializarObjetos(int numObjetos);
 conexiones* inicializarConexiones(int numConexiones);
@@ -77,7 +84,5 @@ puzle* inicializarPuzles(int numPuzles);
 
 // Función para liberar la memoria al final del juego
 void liberarMemoriaContenidos(salas *arraySalas, objeto *arrayObjetos, conexiones *arrayConexiones, puzle *arrayPuzles);
-
-Void mostrar_inventario(objeto *listaObjetos, int numObjetos);
 
 #endif
