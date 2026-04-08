@@ -58,6 +58,9 @@ void describirSala(salas *salaActual);
 // Lista objetos y salidas indicando si están bloqueadas o abiertas
 void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones);
 
+// Permite moverse a una sala adyacente si la conexión está abierta o activa
+salas* moverSala(salas *salaActual, conexiones *listaConexiones, int numConexiones, char *idDestino, salas *arraySalas, int numSalas) {
+
 // Traslada un objeto de la sala al inventario 
 void cogerObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado);
 
