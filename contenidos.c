@@ -280,6 +280,22 @@ void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conex
     printf("Memoria liberada correctamente. ¡Gracias por jugar!\n");    
     }
 
+Void mostrar_inventario(objeto *listaObjetos, int numObjetos){
+    int objetosEnInventario = 0;
+    printf("\n--- INVENTARIO ---\n");
 
+    for (int i = 0; i < numObjetos; i++) {
+        // Comprobamos si el objeto actual está en el inventario
+        if (strcmp(listaObjetos[i].lugar, "inv") == 0) {
+            printf("- %s: %s\n", listaObjetos[i].nombre, listaObjetos[i].descripcion);
+            objetosEnInventario++;
+        }
+    }
+
+    if (objetosEnInventario == 0) {
+        printf("Tu inventario está vacío.\n");
+    }
+    
+    printf("------------------\n");
 
 
