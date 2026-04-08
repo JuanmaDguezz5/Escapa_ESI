@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
     int id_jugador;
@@ -33,19 +34,19 @@ typedef struct {
     char id_objeto[5];       
     char nombre[16];       
     char descripcion[151];
-    int lugar;         //Id_sala o Inventario 
-} objetos;
+    char lugar [15];         //Id_sala o Inventario 
+} objeto;
 
 typedef struct {
     char id_conexion[4];       
     char id_origen[3];       
     char id_destino[3];
     char Estado[11];    // Activa o Bloqueada
-    int condicion; // 0 si no aplica, Id_obj o Id_puzle
+    char condicion [5]; // 0 si no aplica, Id_obj o Id_puzle
 } conexiones;
 
 typedef struct {
-    int id_sala;       
+    char id_sala[3];       
     char nombre[16];       
     char Tipo[11]; //Inicial, normal o salida
     char descripcion[151];
@@ -60,7 +61,22 @@ void interactuarPuzle(Puzle *puzleActual, conexiones *conexionesJuego, int numCo
 // Traslada un objeto de la sala al inventario 
 void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado);
 
+// Pasa un objeto del inventario a la sala actual
+void soltarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, char *idObjBuscado);
+
+// Usa un objeto del inventario para abrir una conexión bloqueada adyacente
+void usarObjeto(objetos *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, salas *salaActual, char *idObjBuscado);
+
 // Lista objetos y salidas indicando si están bloqueadas o abiertas
 void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, int numConexiones);
+
+// Funciones de Inicialización de Memoria Dinámica
+salas* inicializarSalas(int numSalas);
+objetos* inicializarObjetos(int numObjetos);
+conexiones* inicializarConexiones(int numConexiones);
+puzle* inicializarPuzles(int numPuzles);
+
+// Función para liberar la memoria al final del juego
+void liberarMemoriaContenidos(salas *arraySalas, objetos *arrayObjetos, conexiones *arrayConexiones, puzle *arrayPuzles);
 
 #endif
