@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
+#include "contenidos.h"
+
 
 int registrarUsuario();
 int iniciarSesion();
@@ -29,13 +32,13 @@ int main() {
     switch (opcion) {
         case 1:
             printf("1. Registrate:\n");
-            printf("2. Inicia Sesion:\n");
-                 
+            printf("2. Inicia Sesion:\n");              
                 do {
                     k=0;
                     scanf("%d", &opcion2);
 
-                        switch (opcion2) {
+                        switch (opcion2) 
+                        {
 
                         case 1:
                             printf("Registrate:\n");
@@ -52,22 +55,21 @@ int main() {
                             k++;
                             fflush(stdin);
                         break;
-                }
-            } while (k!=0);
-
-                        
-                    
-        break; 
+                        }
+                  } while (k!=0);
+             break; 
                   
         case 2:
             printf("Inicia Sesion:\n");
                     iniciarSesion();
                 //función para iniciar sesión
             break;
+
         case 3:
             printf("Saliendo...\n");
             return 0;
             break;
+
         default:
             printf("Opcion no valida\n");
             break;
@@ -77,16 +79,16 @@ int main() {
 }
 
 int registrarUsuario() {
-    char Nomb_jugador[10];
-    char Usuario[20];
-    char contraseña[8];
+    char Nomb_jugador[20];
+    char jugador[11];
+    char contrasenia[9];
 
-    printf("Ingrese su nombre: ");
+    printf("Ingrese su nombre completo: ");
     scanf("%s", Nomb_jugador);
     printf("Ingrese su nombre de usuario: ");
-    scanf("%s", Usuario);
+    scanf("%s", jugador);
     printf("Ingrese su contrasena: ");
-    scanf("%s", contraseña);
+    scanf("%s", contrasenia);
 
     // código para guardar los datos del usuario en el fichero
  
@@ -96,19 +98,17 @@ int registrarUsuario() {
 
 
  int iniciarSesion() {
-    char Usuario[20];
-    char contraseña[8];
+    char jugador[11];
+    char contrasenia[9];
 
     printf("Ingrese su nombre de usuario: ");
-    scanf("%s", Usuario);
-    printf("Ingrese su contraseña: ");
-    scanf("%s", contraseña);
+    scanf("%s", jugador);
+    printf("Ingrese su contrasenia: ");
+    scanf("%s", contrasenia);
 
     // código para verificar los datos del usuario en el fichero
 
     printf("Inicio de sesion exitoso\n");
     return 0;
     }
-   
-    
-   
+     
