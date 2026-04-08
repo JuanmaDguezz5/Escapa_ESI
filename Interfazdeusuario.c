@@ -168,13 +168,6 @@ void menuPartida(salas *salaActual, objeto *listaObjetos, int numObjetos, conexi
     
     // Añadimos una variable para guardar el ID del objeto que el usuario quiera 
     char idObjBuscado[5];
-
-    /* * NOTA IMPORTANTE PARA EL FUTURO:
-     * Para que estas funciones no den error al compilar, tendrás que pasarle a 
-     * menuPartida() los punteros del juego o declararlos globalmente. 
-     * Ejemplo: salas *salaActual, objeto *listaObjetos, etc.
-     */
-
     do {
         printf("\n========================================\n");
         printf("Menú:\n");
