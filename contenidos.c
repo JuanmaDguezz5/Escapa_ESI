@@ -75,7 +75,7 @@ void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conex
  * Se garantiza que el objeto deja de estar en la sala. 
  */
 
-void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado){
+void cogerObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado){
     for (int i = 0; i < numObjetos; i++) {
         //Buscamos el objeto por su ID y verificamos su Locaalización
         if (strcmp(listaObjetos[i].lugar, sala->id_sala) == 0) {
