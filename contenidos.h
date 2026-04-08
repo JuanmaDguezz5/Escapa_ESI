@@ -6,6 +6,13 @@
 #include <string.h>
 
 typedef struct {
+    char id_objeto[5];       
+    char nombre[16];       
+    char descripcion[151];
+    char lugar [15];         //Id_sala o Inventario 
+} objeto;
+
+typedef struct {
     int id_jugador;
     int id_sala;
     int id_obj;     // Objeto: Id_obj, Localizacion)
@@ -31,13 +38,6 @@ typedef struct {
 } puzle;
 
 typedef struct {
-    char id_objeto[5];       
-    char nombre[16];       
-    char descripcion[151];
-    char lugar [15];         //Id_sala o Inventario 
-} objeto;
-
-typedef struct {
     char id_conexion[4];       
     char id_origen[3];       
     char id_destino[3];
@@ -56,7 +56,7 @@ typedef struct {
 void describirSala(salas *salaActual); 
 
 // Permite resolver un puzle mediante código o palabra 
-void interactuarPuzle(Puzle *puzleActual, conexiones *conexionesJuego, int numConexiones);
+void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones);
 
 // Traslada un objeto de la sala al inventario 
 void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado);
@@ -65,11 +65,10 @@ void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *id
 void soltarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, char *idObjBuscado);
 
 // Usa un objeto del inventario para abrir una conexión bloqueada adyacente
-void usarObjeto(objetos *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, salas *salaActual, char *idObjBuscado);
+void usarObjeto(objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, salas *salaActual, char *idObjBuscado);
 
 // Lista objetos y salidas indicando si están bloqueadas o abiertas
-void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, int numConexiones);
-
+void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones);
 // Funciones de Inicialización de Memoria Dinámica
 salas* inicializarSalas(int numSalas);
 objetos* inicializarObjetos(int numObjetos);
@@ -77,6 +76,6 @@ conexiones* inicializarConexiones(int numConexiones);
 puzle* inicializarPuzles(int numPuzles);
 
 // Función para liberar la memoria al final del juego
-void liberarMemoriaContenidos(salas *arraySalas, objetos *arrayObjetos, conexiones *arrayConexiones, puzle *arrayPuzles);
+void liberarMemoriaContenidos(salas *arraySalas, objeto *arrayObjetos, conexiones *arrayConexiones, puzle *arrayPuzles);
 
 #endif
