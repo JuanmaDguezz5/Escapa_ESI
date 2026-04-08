@@ -4,7 +4,6 @@
 
 #include "contenidos.h"
 
-
 /**
  * Muestra la información de la sala actual y verifica la victoria.
  *  {Pre}  salaActual != NULL. El puntero debe apuntar a una sala válida.
@@ -28,34 +27,44 @@ void describirSala(salas *salaActual) {
 }
 
 /**
- *  Gestiona la interacción con un puzle y desbloquea conexiones.
- * * {pre}  puzleActual y conexionesJuego != NULL. numConexiones >= 0. 
- * {post} Si la respuesta es correcta, marca el puzle como resuelto y cambia el 
- * estado de las conexiones asociadas a "Activa". 
+ *  Lista los elementos interactuables de la ubicación actual.
+ * * {pre}  Punteros válidos. numObjetos y numConexiones reflejan el tamaño de los arrays. 
+ * {post} Muestra por pantalla objetos en el suelo y estado de las salidas (Abiertas/Bloqueadas). 
  */
 
-void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones){
+void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones){ 
+    printf("Examinando la sala: %s...\n", salaActual->nombre);
+    printf("Descripción: %s\n", salaActual->descripcion);
 
-    char respuestaUsuario[50];
-    //1. Mostrar el puzle al usuario
-    printf("RETO: %s \n", puzleActual->descripcion);
-    //2. Solicitar la respuesta al usuario
-    printf("Introduce tu respuesta: ");
-    scanf("%s", respuestaUsuario);
-
-    //3. Verificar la respuesta
-    if (strcmp(respuestaUsuario, puzleActual->solucion) == 0) {
-        printf("¡Respuesta correcta! El puzle ha sido resuelto.\n");
-        puzleActual->resuelto = 1; //Marcar el puzle como resuelto
-
-        for (int i = 0; i < numConexiones; i++) {
-            if (strcmp(conexionesJuego[i].condicion, puzleActual->id_puzle) == 0) {
-                strcpy(conexionesJuego[i].Estado, "Activa");
-                printf("Se ha escuchado un clic: La conexion a %s ahora esta abierta.\n", conexionesJuego[i].id_destino);            }
+    //1. Listar Objetos en la sala
+    printf("Objetos en la sala:\n");
+    int objetosEncontrados = 0;
+    for (int i = 0; i < numObjetos; i++) {
+        if (strcmp(listaObjetos[i].lugar, salaActual->id_sala) == 0) {
+            printf("- %s: %s\n", listaObjetos[i].nombre, listaObjetos[i].descripcion);
+            objetosEncontrados++;
         }
-        
-    } else {
-        printf("Respuesta incorrecta. Inténtalo de nuevo.\n");
+    }
+    if (objetosEncontrados == 0) {
+        printf("No hay objetos visibles en esta sala.\n");
+    }
+
+    //2. Listar conexiones disponibles
+    printf("SALIDAS VISIBLES:\n");
+    int conexionesEncontradas = 0;
+    for (int i = 0; i < numConexiones; i++) {
+        if (strcmp(listaConexiones[i].id_origen, salaActual->id_sala) == 0) {
+            conexionesEncontradas++;
+            if (strcmp(listaConexiones[i].Estado, "Abierta") == 0 || strcmp(listaConexiones[i].Estado, "Activa") == 0) {
+            printf("- Hacia %s (ABIERTA)\n", listaConexiones[i].id_destino);
+        } else {
+            printf("- Hacia %s (Bloqueada - Necesitas: %s)\n", listaConexiones[i].id_origen, listaConexiones[i].condicion);
+        }
+        conexionesEncontradas++;
+    }
+    
+    if (conexionesEncontradas == 0) {
+        printf("Parece que no hay salidas... Estas atrapado.\n");
     }
 }
 
@@ -65,6 +74,7 @@ void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numCo
  * {post} Si el objeto está en la sala y el ID coincide, su lugar cambia a "inv". 
  * Se garantiza que el objeto deja de estar en la sala. 
  */
+
 void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado){
     for (int i = 0; i < numObjetos; i++) {
         //Buscamos el objeto por su ID y verificamos su Locaalización
@@ -142,7 +152,7 @@ void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *id
        
             // Miramos si la conexión está bloqueada (nota: en tu .txt a veces dice "Bloqueda" y otras "Bloqueada")
            
-            if (strcmp(listaConexiones[i].Estado, "Bloqueada") == 0 || strcmp(listaConexiones[i].Estado, "Bloqueada") == 0) {
+            if (strcmp(listaConexiones[i].Estado, "Bloqueada") == 0 ) {
            // Verificamos si la condición de esa conexión pide exactamente el objeto que queremos usar
                 if (strcmp(listaConexiones[i].condicion, idObjBuscado) == 0) {
                     // Cambiamos el estado a ABIERTA
@@ -159,46 +169,60 @@ void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *id
     }
 }
 
+void mostrar_inventario(objeto *listaObjetos, int numObjetos){
+    int objetosEnInventario = 0;
+    printf("\n--- INVENTARIO ---\n");
 
-/**
- *  Lista los elementos interactuables de la ubicación actual.
- * * {pre}  Punteros válidos. numObjetos y numConexiones reflejan el tamaño de los arrays. 
- * {post} Muestra por pantalla objetos en el suelo y estado de las salidas (Abiertas/Bloqueadas). 
- */
-
-void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones){ 
-    printf("Examinando la sala: %s...\n", salaActual->nombre);
-    printf("Descripción: %s\n", salaActual->descripcion);
-
-    //1. Listar Objetos en la sala
-    printf("Objetos en la sala:\n");
-    int objetosEncontrados = 0;
     for (int i = 0; i < numObjetos; i++) {
-        if (strcmp(listaObjetos[i].lugar, salaActual->id_sala) == 0) {
+        // Comprobamos si el objeto actual está en el inventario
+        if (strcmp(listaObjetos[i].lugar, "inv") == 0) {
             printf("- %s: %s\n", listaObjetos[i].nombre, listaObjetos[i].descripcion);
-            objetosEncontrados++;
+            objetosEnInventario++;
         }
-    }
-    if (objetosEncontrados == 0) {
-        printf("No hay objetos visibles en esta sala.\n");
     }
 
-    //2. Listar conexiones disponibles
-    printf("SALIDAS VISIBLES:\n");
-    int conexionesEncontradas = 0;
-    for (int i = 0; i < numConexiones; i++) {
-        if (strcmp(listaConexiones[i].id_origen, salaActual->id_sala) == 0) {
-            printf("- Hacia %s (ABIERTA)\n", listaConexiones[i].id_destino);
-        } else {
-            printf("- Hacia %s (Bloqueada - Necesitas: %s)\n", listaConexiones[i].id_origen, listaConexiones[i].condicion);
-        }
-        conexionesEncontradas++;
+    if (objetosEnInventario == 0) {
+        printf("Tu inventario está vacío.\n");
     }
     
-    if (conexionesEncontradas == 0) {
-        printf("Parece que no hay salidas... Estas atrapado.\n");
+    printf("------------------\n");
+} 
+
+/**
+ *  Gestiona la interacción con un puzle y desbloquea conexiones.
+ * * {pre}  puzleActual y conexionesJuego != NULL. numConexiones >= 0. 
+ * {post} Si la respuesta es correcta, marca el puzle como resuelto y cambia el 
+ * estado de las conexiones asociadas a "Activa". 
+ */
+
+void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones){
+
+    char respuestaUsuario[50];
+    //1. Mostrar el puzle al usuario
+    printf("RETO: %s \n", puzleActual->descripcion);
+    //2. Solicitar la respuesta al usuario
+    printf("Introduce tu respuesta: ");
+    scanf("%s", respuestaUsuario);
+
+    //3. Verificar la respuesta
+    if (strcmp(respuestaUsuario, puzleActual->solucion) == 0) {
+        printf("¡Respuesta correcta! El puzle ha sido resuelto.\n");
+        puzleActual->resuelto = 1; //Marcar el puzle como resuelto
+
+        for (int i = 0; i < numConexiones; i++) {
+            if (strcmp(conexionesJuego[i].condicion, puzleActual->id_puzle) == 0) {
+                strcpy(conexionesJuego[i].Estado, "Activa");
+                printf("Se ha escuchado un clic: La conexion a %s ahora esta abierta.\n", conexionesJuego[i].id_destino);            }
+        }
+        
+    } else {
+        printf("Respuesta incorrecta. Inténtalo de nuevo.\n");
     }
 }
+
+
+//////////////////// // Funciones de Inicialización de Memoria Dinámica ////////////////////
+
 
 /**
  * Reserva memoria dinámica para el array de salas.
@@ -279,23 +303,3 @@ void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conex
         free(arrayPuzles);
     printf("Memoria liberada correctamente. ¡Gracias por jugar!\n");    
     }
-
-Void mostrar_inventario(objeto *listaObjetos, int numObjetos){
-    int objetosEnInventario = 0;
-    printf("\n--- INVENTARIO ---\n");
-
-    for (int i = 0; i < numObjetos; i++) {
-        // Comprobamos si el objeto actual está en el inventario
-        if (strcmp(listaObjetos[i].lugar, "inv") == 0) {
-            printf("- %s: %s\n", listaObjetos[i].nombre, listaObjetos[i].descripcion);
-            objetosEnInventario++;
-        }
-    }
-
-    if (objetosEnInventario == 0) {
-        printf("Tu inventario está vacío.\n");
-    }
-    
-    printf("------------------\n");
-
-
