@@ -69,6 +69,41 @@ void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conex
 }
 
 /**
+ * Permite al jugador moverse de la sala actual a una sala de destino.
+ * {Pre} Punteros válidos. idDestino debe ser un ID válido (ej. "03").
+ * {Post} Devuelve un puntero a la nueva sala si el movimiento es válido y la 
+ * conexión está abierta. Si no, devuelve el puntero a la sala actual.
+ */
+
+salas* moverSala(salas *salaActual, conexiones *listaConexiones, int numConexiones, char *idDestino, salas *arraySalas, int numSalas) {
+    for (int i = 0; i < numConexiones; i++) {
+        if (strcmp(listaConexiones[i].id_origen, salaActual->id_sala) == 0 && strcmp(listaConexiones[i].id_destino, idDestino) == 0) {
+            
+            if (strcmp(listaConexiones[i].Estado, "Abierta") == 0 || strcmp(listaConexiones[i].Estado, "Activa") == 0) {
+                // Buscar la sala de destino en el array de salas
+                for (int j = 0; j < numSalas; j++) {
+                    if (strcmp(arraySalas[j].id_sala, idDestino) == 0) {
+                        printf("Te has movido a la sala: %s\n", arraySalas[j].nombre);
+                        describirSala(&arraySalas[j]);
+                        
+                        // IMPORTANTE: Devolvemos el puntero a la nueva sala
+                        return &arraySalas[j]; 
+                    }
+                }
+                printf("Error: La sala de destino no existe en el sistema.\n");
+                return salaActual; // Devolvemos la actual porque falló
+                
+            } else {
+                printf("La salida hacia %s esta bloqueada. Necesitas: %s\n", idDestino, listaConexiones[i].condicion);
+                return salaActual; // Devolvemos la actual porque está bloqueada
+            }
+        }
+    }
+    printf("No hay una conexion directa hacia la sala %s desde aqui.\n", idDestino);
+    return salaActual; // Devolvemos la actual porque no hay camino
+}
+
+/**
  *  Gestiona la recogida de objetos de una sala.
  * * {pre}  listaObjetos y sala != NULL. idObjBuscado debe ser un ID de 4 caracteres. 
  * {post} Si el objeto está en la sala y el ID coincide, su lugar cambia a "inv". 
