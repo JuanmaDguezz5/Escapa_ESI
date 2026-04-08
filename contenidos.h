@@ -59,7 +59,7 @@ void describirSala(salas *salaActual);
 void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones);
 
 // Traslada un objeto de la sala al inventario 
-void gestionObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado);
+void cogerObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado);
 
 // Usa un objeto del inventario para abrir una conexión bloqueada adyacente
 void usarObjeto(objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, salas *salaActual, char *idObjBuscado);
