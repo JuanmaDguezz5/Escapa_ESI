@@ -58,8 +58,7 @@ void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conex
             if (strcmp(listaConexiones[i].Estado, "Abierta") == 0 || strcmp(listaConexiones[i].Estado, "Activa") == 0) {
             printf("- Hacia %s (ABIERTA)\n", listaConexiones[i].id_destino);
         } else {
-            printf("- Hacia %s (Bloqueada - Necesitas: %s)\n", listaConexiones[i].id_origen, listaConexiones[i].condicion);
-        }
+            printf("- Hacia %s (Bloqueada - Necesitas: %s)\n", listaConexiones[i].id_destino, listaConexiones[i].condicion);        }
         conexionesEncontradas++;
     }
     
