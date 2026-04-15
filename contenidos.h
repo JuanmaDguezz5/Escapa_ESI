@@ -7,7 +7,7 @@
 
 typedef struct {
     char id_objeto[5];       
-    char nombre[16];       
+    char nombre[30];       
     char descripcion[151];
     char lugar [15];         //Id_sala o Inventario 
 } objeto;
@@ -29,7 +29,7 @@ typedef struct {
 
 typedef struct {
     char id_puzle[4];      
-    char nombre[16];       
+    char nombre[30];       
     int id_sala;          
     char tipo[10];         // Código o Palabra 
     char descripcion[151]; 
@@ -47,7 +47,7 @@ typedef struct {
 
 typedef struct {
     char id_sala[3];       
-    char nombre[16];       
+    char nombre[30];       
     char Tipo[11]; //Inicial, normal o salida
     char descripcion[151];
 } salas;
@@ -59,13 +59,13 @@ void describirSala(salas *salaActual);
 void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones);
 
 // Permite moverse a una sala adyacente si la conexión está abierta o activa
-salas* moverSala(salas *salaActual, conexiones *listaConexiones, int numConexiones, char *idDestino, salas *arraySalas, int numSalas) {
+salas* moverSala(salas *salaActual, conexiones *listaConexiones, int numConexiones, char *idDestino, salas *arraySalas, int numSalas) ;
 
 // Traslada un objeto de la sala al inventario 
 void cogerObjetos (objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado);
 
 // Usa un objeto del inventario para abrir una conexión bloqueada adyacente
-void usarObjeto(objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, salas *salaActual, char *idObjBuscado);
+void usarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, conexiones *listaConexiones, int numConexiones, char *idObjBuscado);
 
 // Pasa un objeto del inventario a la sala actual
 void soltarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, char *idObjBuscado);
