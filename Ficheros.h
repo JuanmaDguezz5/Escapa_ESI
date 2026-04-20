@@ -2,14 +2,12 @@
 #define FICHERO_H
 
 #include "contenidos.h"
-#include "GuardarFicheros.h"
-#include <stdio.h>
 
 typedef struct {
     FILE *Jugadores;
     FILE *Salas;
     FILE *Conexiones;
-    FILE *Objetivos;
+    FILE *Objetos;
     FILE *Puzles;
     FILE *Partidas;
 } Ficheros;
