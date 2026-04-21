@@ -4,8 +4,8 @@
 
 #include "contenidos.h"
 
-/**
- * Muestra la información de la sala actual y verifica la victoria.
+/*
+  Muestra la información de la sala actual y verifica la victoria.
  */
 void describirSala(salas *salaActual) {
     if (salaActual == NULL) {
@@ -22,8 +22,8 @@ void describirSala(salas *salaActual) {
     }
 }
 
-/**
- * Lista los elementos interactuables de la ubicacion actual.
+/*
+  Lista los elementos interactuables de la ubicacion actual.
  */
 void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones) { 
     printf("Examinando la sala: %s...\n", salaActual->nombre);
@@ -54,15 +54,15 @@ void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conex
                 printf("- Hacia %s (Bloqueada - Necesitas: %s)\n", listaConexiones[i].id_origen, listaConexiones[i].condicion);
             }
         }
-    } // [CORRECCION] Faltaba esta llave de cierre del 'if' exterior
+    } 
     
     if (conexionesEncontradas == 0) {
         printf("Parece que no hay salidas... Estas atrapado.\n");
     }
 }
 
-/**
- * Permite al jugador moverse de la sala actual a una sala de destino.
+/*
+  Permite al jugador moverse de la sala actual a una sala de destino.
  */
 salas* moverSala(salas *salaActual, conexiones *listaConexiones, int numConexiones, char *idDestino, salas *arraySalas, int numSalas) {
     for (int i = 0; i < numConexiones; i++) {
@@ -91,8 +91,8 @@ salas* moverSala(salas *salaActual, conexiones *listaConexiones, int numConexion
     return salaActual; 
 }
 
-/**
- * Gestiona la recogida de objetos de una sala.
+/*
+  Gestiona la recogida de objetos de una sala.
  */
 void cogerObjetos(objeto *listaObjetos, int numObjetos, salas *sala, char *idObjBuscado) {
     for (int i = 0; i < numObjetos; i++) {
@@ -109,8 +109,8 @@ void cogerObjetos(objeto *listaObjetos, int numObjetos, salas *sala, char *idObj
     printf("No has encontrado el objeto que buscabas.\n");
 }
 
-/**
- * Gestiona la accion de soltar un objeto del inventario en la sala actual.
+/*
+  Gestiona la accion de soltar un objeto del inventario en la sala actual.
  */
 void soltarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, char *idObjBuscado) {
     for (int i = 0; i < numObjetos; i++) {
@@ -130,10 +130,10 @@ void soltarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, char 
     printf("El objeto que intentas soltar no existe en el sistema.\n");
 }
 
-/**
- * Gestiona el uso de un objeto del inventario para desbloquear conexiones adyacentes.
+/*
+  Gestiona el uso de un objeto del inventario para desbloquear conexiones adyacentes.
  */
-// [CORRECCION] Se ha reordenado los parametros para que coincidan con contenidos.h
+
 void usarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, conexiones *listaConexiones, int numConexiones, char *idObjBuscado) {
     int tieneObjeto = 0;
 
@@ -173,8 +173,8 @@ void usarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, conexio
     }
 }
 
-/**
- * Muestra el inventario del jugador
+/*
+  Muestra el inventario del jugador
  */
 void mostrar_inventario(objeto *listaObjetos, int numObjetos) {
     int objetosEnInventario = 0;
@@ -195,8 +195,8 @@ void mostrar_inventario(objeto *listaObjetos, int numObjetos) {
     printf("------------------\n");
 } 
 
-/**
- * Gestiona la interaccion con un puzle y desbloquea conexiones.
+/*
+  Gestiona la interaccion con un puzle y desbloquea conexiones.
  */
 void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones) {
     char respuestaUsuario[50];
@@ -262,8 +262,8 @@ puzle* inicializarPuzles(int numPuzles) {
     return arrayPuzles;
 }
 
-/**
- * Libera toda la memoria dinámica reservada
+/*
+ Libera toda la memoria dinámica reservada
  */
 void liberarMemoriaContenidos(salas *arraySalas, objeto *arrayObjetos, conexiones *arrayConexiones, puzle *arrayPuzles) {
     if (arraySalas != NULL) {
@@ -277,7 +277,7 @@ void liberarMemoriaContenidos(salas *arraySalas, objeto *arrayObjetos, conexione
     }
     if (arrayPuzles != NULL) {
         free(arrayPuzles);
-    } // [CORRECCION] Faltaba esta llave de cierre
+    } 
     printf("Memoria liberada correctamente. ¡Gracias por jugar!\n");    
 }
 
