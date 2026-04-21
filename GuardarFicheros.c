@@ -1,44 +1,57 @@
 #include "GuardarFicheros.h"
 
-void GuardarDatos (Ficheros *F) {
-    // Parte de jugadores y salas
-    fprintf (F->Partidas, "JUGADOR: %d\nSALA: %s\n", jugadorActual.id_jugador, salaActual.nombre);
+// Guarda el progreso temporal del jugador (dónde está y qué puzles ha resuelto)
+void GuardarEstadoPartida(Ficheros *F, jugadores j, salas s, puzle *arrayPuzles, int numPuzles) {
+    if (F->Partidas == NULL) return;
 
-    // Parte de obejtos e inventario
-    for (int i = 0 ; i < 7 ; i++) {
-        fprintf (F->Partidas, "OBJETO: %s-%s\n", jugadorActual.inventario[i].nombre, jugadorActual.inventario[i].lugar);
-    }
+    // Guardamos el ID del jugador y la sala actual
+    fprintf(F->Partidas, "JUGADOR: %d\n", j.id_jugador);
+    fprintf(F->Partidas, "SALA: %s\n", s.id_sala);
 
-    // Parte de conexiones
-    for (int i = 0 ; i < 18 ; i++){
-        if ((Conexiones[i].Estado[0] == 'A') && Conexiones[i].condicion[0] != '0') {
-            fprintf (F->Partidas, "CONEXION: %s-%s\n", Conexiones[i].id_conexion, Conexiones[i].Estado);
-        }
-    }
-
-    // Parte de los puzles
-    for (int i = 0 ; i < 7 ; i++) {
-        if (Puzles[i].resuelto) {
-            fprintf (F->Partidas, "PUZLE: %s-Resuelto\n", Puzles[i].id_puzle);
+    // Guardamos solo los puzles que ya han sido resueltos
+    for (int i = 0; i < numPuzles; i++) {
+        if (arrayPuzles[i].resuelto == 1) {
+            fprintf(F->Partidas, "PUZLE: %s-Resuelto\n", arrayPuzles[i].id_puzle);
         }
     }
 }
 
-void GuardarJugador (Ficheros *F) {
-    fprintf (F->Jugadores, "%d-%s-%s-%s\n", jugadorActual.id_jugador, jugadorActual.Nomb_jugador, jugadorActual.jugador, jugadorActual.contrasenia);
-    return;
+// Guarda un nuevo jugador en la base de datos (se usa al registrarse)
+void GuardarRegistroJugador(Ficheros *F, jugadores j) {
+    if (F->Jugadores == NULL) return;
+
+    fprintf(F->Jugadores, "%d-%s-%s-%s\n", j.id_jugador, j.Nomb_jugador, j.jugador, j.contrasenia);
 }
 
-void GuardarObjetos (Ficheros *F) {
-    for (int i = 0 ; i < 7 ; i++) {
-        fprintf (F->Objetos, "%s-%s-%s-%s\n", jugadorActual.inventario[i].id_objeto, jugadorActual.inventario[i].nombre,
-                                           jugadorActual.inventario[i].descripcion, jugadorActual.inventario[i].lugar);
+// Sobrescribe el archivo de objetos para guardar sus nuevas ubicaciones (inventario o sala)
+void GuardarObjetosActualizados(Ficheros *F, objeto *arrayObjetos, int numObjetos) {
+    if (F->Objetos == NULL) return;
+
+    for (int i = 0; i < numObjetos; i++) {
+        // Evitamos guardar estructuras vacías de la memoria dinámica
+        if(arrayObjetos[i].id_objeto[0] != '\0') {
+            fprintf(F->Objetos, "%s-%s-%s-%s\n", 
+                    arrayObjetos[i].id_objeto, 
+                    arrayObjetos[i].nombre,
+                    arrayObjetos[i].descripcion, 
+                    arrayObjetos[i].lugar);
+        }
     }
 }
 
-void GuardarConexiones (Ficheros *F) {
-    for (int i = 0 ; i < 18 ; i++) {
-        fprintf (F->Conexiones, "%s-%s-%s-%s-%s\n", Conexiones[i].id_conexion, Conexiones[i].id_origen,
-                                                 Conexiones[i].id_destino, Conexiones[i].Estado, Conexiones[i].condicion);
+// Sobrescribe el archivo de conexiones para guardar las puertas que se han abierto
+void GuardarConexionesActualizadas(Ficheros *F, conexiones *arrayConexiones, int numConexiones) {
+    if (F->Conexiones == NULL) return;
+
+    for (int i = 0; i < numConexiones; i++) {
+        // Evitamos guardar estructuras vacías
+        if(arrayConexiones[i].id_conexion[0] != '\0') {
+            fprintf(F->Conexiones, "%s-%s-%s-%s-%s\n", 
+                    arrayConexiones[i].id_conexion, 
+                    arrayConexiones[i].id_origen,
+                    arrayConexiones[i].id_destino, 
+                    arrayConexiones[i].Estado, 
+                    arrayConexiones[i].condicion);
+        }
     }
 }
