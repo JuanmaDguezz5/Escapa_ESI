@@ -3,20 +3,14 @@
 
 #include "Ficheros.h"
 
-// Precondición: Tener datos guardados
-// Postcondición: Carga los datos que estén guardados en el fichero Jugadores.txt
-void CargarJugador (Ficheros *F);
+// Nuevas firmas adaptadas a la arquitectura sin globales
+int CargarLoginUsuario(Ficheros *F, jugadores *jDestino);
+estado_partida CargarEstadoGuardado(Ficheros *F, puzle *arrayPuzles, int numPuzles);
 
-// Precondición: Tener datos guardados
-// Postcondición: Cargar los datos que estén guardados en el fichero Conexiones.txt
-void CargarConexiones (Ficheros *F);
-
-// Precondición: Tener datos guardados
-// Postcondición: Cargar los datos que estén guardados en el fichero Objetos.txt
-void CargarObjetos (Ficheros *F);
-
-// Precondición: Tener datos guardados
-// Postcondición: Cargar los datos que estén guardados en el fichero Partidas.txt
-void CargarPartida (Ficheros *F);
+// Las firmas de carga de arrays se mantienen igual porque ya funcionaban por parámetro
+void CargarConexiones (Ficheros *F, conexiones *arrayConexiones, int numConexiones);
+void CargarObjetos (Ficheros *F, objeto *arrayObjetos, int numObjetos);
+void CargarSalas (Ficheros *F, salas *arraySalas, int numSalas);
+void CargarPuzles (Ficheros *F, puzle *arrayPuzles, int numPuzles);
 
 #endif
