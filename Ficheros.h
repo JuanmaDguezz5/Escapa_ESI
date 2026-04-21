@@ -12,7 +12,9 @@ typedef struct {
     FILE *Partidas;
 } Ficheros;
 
-int CrearFicheros (Ficheros *F);
-void CerrarFicheros (Ficheros *F);
+int AbrirFicherosLectura(Ficheros *F);
+int AbrirFicherosEscritura(Ficheros *F);
+int AbrirFicherosRegistro(Ficheros *F); 
+void CerrarFicheros(Ficheros *F);
 
 #endif
