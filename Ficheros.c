@@ -1,7 +1,6 @@
 #include "Ficheros.h"
 
 int AbrirFicherosLectura(Ficheros *F) {
-    // CORRECCIÓN: Todos los nombres en minúsculas para coincidir con los archivos reales
     F->Jugadores    = fopen("jugadores.txt", "r");
     F->Salas        = fopen("salas.txt", "r");
     F->Conexiones   = fopen("conexiones.txt", "r");
@@ -17,7 +16,6 @@ int AbrirFicherosLectura(Ficheros *F) {
 }
 
 int AbrirFicherosEscritura(Ficheros *F) {
-    // CORRECCIÓN: Nombres en minúsculas
     F->Jugadores    = fopen("jugadores.txt", "a+"); 
     F->Salas        = NULL; 
     F->Conexiones   = fopen("conexiones.txt", "w");
@@ -33,7 +31,6 @@ int AbrirFicherosEscritura(Ficheros *F) {
 }
 
 int AbrirFicherosRegistro(Ficheros *F) {
-    // CORRECCIÓN: Nombre en minúsculas
     F->Jugadores    = fopen("jugadores.txt", "a+"); 
     F->Salas        = NULL;
     F->Conexiones   = NULL;
