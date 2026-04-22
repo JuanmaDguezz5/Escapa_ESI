@@ -88,7 +88,7 @@ int registrarUsuario() {
     printf("Contrasena (max. 8 caracteres): "); 
     scanf("%8s", nuevo.contrasenia);
     
-    nuevo.id_jugador = 1; // ID por defecto o autoincremental en Ficheros
+    nuevo.id_jugador = 1; // ID por defecto (se podría hacer autoincremental leyendo el fichero)
     
     Ficheros F;
     if (AbrirFicherosRegistro(&F) == 0) {
@@ -115,7 +115,7 @@ int iniciarSesion(jugadores *jActual) {
 // ==========================================
 void menuPrincipal(jugadores jActual) {
     int opcion, k;
-    // Tamaños según la especificación del proyecto
+    // Tamaños según la especificación de tu proyecto
     int numSalas = 13, numObjetos = 7, numConexiones = 18, numPuzles = 7;
 
     do {
@@ -137,7 +137,6 @@ void menuPrincipal(jugadores jActual) {
             case 1: // NUEVA PARTIDA
                 printf("\nGenerando nuevo mundo...\n");
                 
-                // Reserva de memoria dinámica
                 salas *arraySalas = inicializarSalas(numSalas);
                 objeto *arrayObjetos = inicializarObjetos(numObjetos);
                 conexiones *arrayConexiones = inicializarConexiones(numConexiones);
@@ -151,7 +150,7 @@ void menuPrincipal(jugadores jActual) {
                     CargarObjetos(&F, arrayObjetos, numObjetos);
                     CerrarFicheros(&F);
 
-                    // Buscar la sala de inicio (ID "01" o tipo INICIAL)
+                    // Buscar la sala de inicio
                     salas *salaInicio = NULL;
                     for(int i = 0; i < numSalas; i++) {
                         if(strcmp(arraySalas[i].Tipo, "INICIAL") == 0) {
@@ -161,7 +160,7 @@ void menuPrincipal(jugadores jActual) {
                     if(salaInicio == NULL) salaInicio = &arraySalas[0];
 
                     printf("\n--- INICIO DE ESI-ESCAPE ---\n");
-                    // LLAMADA AL MOTOR
+                    // LLAMADA AL MOTOR PASANDO EL ID DEL JUGADOR
                     iniciarBucleJuego(arraySalas, numSalas, arrayObjetos, numObjetos, arrayConexiones, numConexiones, arrayPuzles, numPuzles, salaInicio, jActual.id_jugador);
                     
                     liberarMemoriaContenidos(arraySalas, arrayObjetos, arrayConexiones, arrayPuzles);
@@ -183,7 +182,7 @@ void menuPrincipal(jugadores jActual) {
                     CargarConexiones(&F_cargar, arrayConexionesC, numConexiones);
                     CargarObjetos(&F_cargar, arrayObjetosC, numObjetos);
                     
-                    // Cargamos el estado específico (sala y puzles resueltos)
+                    // Cargamos el estado específico usando el struct que devuelve la función
                     estado_partida ep = CargarEstadoGuardado(&F_cargar, arrayPuzlesC, numPuzles);
                     CerrarFicheros(&F_cargar);
 
@@ -197,7 +196,7 @@ void menuPrincipal(jugadores jActual) {
                     if(salaGuardada == NULL) salaGuardada = &arraySalasC[0];
 
                     printf("\n--- PARTIDA REANUDADA ---\n");
-                    // LLAMADA AL MOTOR CON EL ESTADO CARGADO
+                    // LLAMADA AL MOTOR CON EL ESTADO CARGADO Y EL ID RECUPERADO
                     iniciarBucleJuego(arraySalasC, numSalas, arrayObjetosC, numObjetos, arrayConexionesC, numConexiones, arrayPuzlesC, numPuzles, salaGuardada, ep.id_jugador);
                     
                     liberarMemoriaContenidos(arraySalasC, arrayObjetosC, arrayConexionesC, arrayPuzlesC);
