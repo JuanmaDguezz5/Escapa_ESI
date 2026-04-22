@@ -1,4 +1,4 @@
-OB01-Tarjeta_Clase_Teoria-Tarjeta con banda magnetica que permite abrir el aula de teoría C0-01
+OB01-Tarjeta_Clase_Teoria-Tarjeta con banda magnetica que permite abrir el aula de teoria-01
 OB02-Llave_Biblioteca-Llave antigua que sirve para abrir la biblioteca de la ESI-07
 OB03-Tarjeta_Cafeteria-Tarjeta con banda magnetica que permite abrir la cafeteria de la ESI-03
 OB04-Tarjeta_Clase_Practicas-Tarjeta con banda magnetica que permite abrir el aula de practicas del pasillo E1-04
