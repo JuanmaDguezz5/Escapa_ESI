@@ -1,7 +1,7 @@
-P01-Puzle ord-01-Codigo-El código está en la pizarra que está llena de apuntes de algebra, si levantas el proyector encontraras el código completo-9532
-P02-Puzle sofas-07-Codigo-Encuentra los sofás que tienen un numero escrito (Cada sofá tiene indicado la posición del dígito en el código)-5682
-P03-Puzle libros-03-Palabra-Tienes que encontrar el libro de Verificación Formal de Esther y mira la primera página para encontrar la palabra-programación
-P04-Puzle cafeteria-04-Palabra-Pidele a Roque una sopa de letras y en ella estará el código escondido-bocadillo
+P01-Puzle ord-01-Codigo-El codigo esta en la pizarra que esta llena de apuntes de algebra, si levantas el proyector encontraras el codigo completo-9532
+P02-Puzle sofas-07-Codigo-Encuentra los sofas que tienen un numero escrito (Cada sofa tiene indicado la posición del digito en el codigo)-5682
+P03-Puzle libros-03-Palabra-Tienes que encontrar el libro de Verificación Formal de Esther y mira la primera pagina para encontrar la palabra-programacion
+P04-Puzle cafeteria-04-Palabra-Pidele a Roque una sopa de letras y en ella estara el codigo escondido-bocadillo
 P05-Puzle ordenadores-02-Codigo-Introduce el numero de ordenadores que se encuentran en el aula seguido de 2 ceros-1700
-P06-Puzle consejeria-12-Palabra-Dile esta palabra a la conserje para que te de la llave del salón de actos (la palabra se encuentra en un papel tirado en las escaleras)-escape
-P07-Puzle butaca-05-Codigo-En la butaca 4 de la fila 7 se encuentra debajo de ella un papelito pegado con el ultimo código para escapar-2026
+P06-Puzle consejeria-12-Palabra-Dile esta palabra a la conserje para que te de la llave del salon de actos (la palabra se encuentra en un papel tirado en las escaleras)-escape
+P07-Puzle butaca-05-Codigo-En la butaca 4 de la fila 7 se encuentra debajo de ella un papelito pegado con el ultimo codigo para escapar-2026
