@@ -57,7 +57,7 @@ typedef struct {
 void describirSala(salas *salaActual); 
 
 // Lista objetos y salidas indicando si están bloqueadas o abiertas
-void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones);
+void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, salas *arraySalas, int numSalas);
 
 // Permite moverse a una sala adyacente si la conexión está abierta o activa
 salas* moverSala(salas *salaActual, conexiones *listaConexiones, int numConexiones, char *idDestino, salas *arraySalas, int numSalas);
@@ -75,8 +75,7 @@ void soltarObjeto(objeto *listaObjetos, int numObjetos, salas *salaActual, char 
 void mostrar_inventario(objeto *listaObjetos, int numObjetos);
 
 // Permite resolver un puzle mediante código o palabra 
-void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones);
-
+void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones, objeto *listaObjetos, int numObjetos);
 
 // Funciones de Inicialización de Memoria Dinámica
 
