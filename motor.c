@@ -15,29 +15,25 @@ void iniciarBucleJuego(salas *arraySalas, int numSalas,
     
     int jugando = 1;
     int opcion;
-    char inputTemporal[15]; 
+    char inputTemporal[15];
 
-    // Al entrar por primera vez o al cargar partida, mostramos donde estamos
     describirSala(salaActual);
 
     while (jugando) {
-        // 1. Comprobar Condición de Victoria 
         if (strcmp(salaActual->Tipo, "SALIDA") == 0) {
             printf("\n====================================================\n");
             printf("  ¡HAS ESCAPADO! Mision cumplida. Fin del juego.\n");
             printf("====================================================\n");
             printf("Presiona ENTER para volver al menu principal...\n");
             
-            // Limpiar buffer y pausar
             int c;
             while ((c = getchar()) != '\n' && c != EOF); 
             getchar(); 
             
             jugando = 0;
-            break; 
+            break;
         }
 
-        // 2. Mostrar Menú de Acciones 
         printf("\n========================================\n");
         printf("          SALA: %s\n", salaActual->nombre);
         printf("========================================\n");
@@ -50,23 +46,22 @@ void iniciarBucleJuego(salas *arraySalas, int numSalas,
         printf("7. Usar objeto\n");
         printf("8. Resolver puzle / introducir codigo\n");
         printf("9. Guardar partida\n");
-        printf("10. Volver al menu\n");
+        printf("10. Volver\n");
         printf("----------------------------------------\n");
         printf("Elige una accion: ");
         
         if (scanf("%d", &opcion) != 1) {
-            opcion = 0; 
-            while (getchar() != '\n'); 
+            opcion = 0; while (getchar() != '\n'); // Limpiar buffer si mete letras
         }
+        printf("\n");
 
-        // 3. Procesar la Acción
         switch (opcion) {
-            case 1: 
-                describirSala(salaActual); 
+            case 1:
+                describirSala(salaActual);
                 break;
                 
-            case 2: 
-                examinarSala(salaActual, arrayObjetos, numObjetos, arrayConexiones, numConexiones); 
+            case 2:
+                examinarSala(salaActual, arrayObjetos, numObjetos, arrayConexiones, numConexiones, arraySalas, numSalas);
                 break;
                 
             case 3:
@@ -87,8 +82,8 @@ void iniciarBucleJuego(salas *arraySalas, int numSalas,
                 soltarObjeto(arrayObjetos, numObjetos, salaActual, inputTemporal);
                 break;
                 
-            case 6: 
-                mostrar_inventario(arrayObjetos, numObjetos); 
+            case 6:
+                mostrar_inventario(arrayObjetos, numObjetos);
                 break;
                 
             case 7:
@@ -100,35 +95,38 @@ void iniciarBucleJuego(salas *arraySalas, int numSalas,
             case 8:
                 printf("Introduce el ID del puzle a resolver (ej. P01): ");
                 scanf("%14s", inputTemporal);
-                int puzleEncontrado = 0;
                 
-                // Buscamos el puzle en la memoria dinámica
+                int puzleEncontrado = 0;
                 for(int i = 0; i < numPuzles; i++) {
-                    if(arrayPuzles[i].id_puzle[0] != '\0' && strcmp(arrayPuzles[i].id_puzle, inputTemporal) == 0) {
-                        // Verificamos si el jugador está en la sala correcta para resolverlo
+                    if(arrayPuzles[i].id_puzle[0] == '\0') continue;
+                    if(strcmp(arrayPuzles[i].id_puzle, inputTemporal) == 0) {
                         if (arrayPuzles[i].id_sala == atoi(salaActual->id_sala)) {
-                            interactuarPuzle(&arrayPuzles[i], arrayConexiones, numConexiones);
+                            interactuarPuzle(&arrayPuzles[i], arrayConexiones, numConexiones, arrayObjetos, numObjetos);
+                            puzleEncontrado = 1;
                         } else {
-                            printf("Ese puzle no se encuentra en esta sala.\n");
+                            printf("Ese puzle no esta en esta sala.\n");
+                            puzleEncontrado = 1;
                         }
-                        puzleEncontrado = 1; 
                         break;
                     }
                 }
-                if(!puzleEncontrado) printf("No existe ningun puzle con ese ID.\n");
+                
+                if(!puzleEncontrado) {
+                    printf("No existe ningun puzle con ese ID.\n");
+                }
                 break;
                 
-            case 9:
+            case 9: {
                 printf("\nGuardando estado de la partida...\n"); 
                 
                 Ficheros F_guardar;
                 if (AbrirFicherosEscritura(&F_guardar) == 0) {
                     
-                    // Creamos un "jugador temporal" solo para pasarle el ID a la función de guardado
+                    // Creamos un "jugador temporal" solo para pasarle el ID a la función
                     jugadores jTemp;
                     jTemp.id_jugador = idJugador;
 
-                    // Pasamos los punteros que ya tenemos, sin tocar variables globales
+                    // Llamamos a TUS funciones de guardado reales
                     GuardarEstadoPartida(&F_guardar, jTemp, *salaActual, arrayPuzles, numPuzles);
                     GuardarObjetosActualizados(&F_guardar, arrayObjetos, numObjetos);
                     GuardarConexionesActualizadas(&F_guardar, arrayConexiones, numConexiones);
@@ -137,10 +135,11 @@ void iniciarBucleJuego(salas *arraySalas, int numSalas,
                     printf("¡Partida guardada con exito!\n");
                 }
                 break;
+            }
                 
             case 10:
                 printf("Abandonando la partida actual. Volviendo al menu...\n");
-                jugando = 0; 
+                jugando = 0;
                 break;
                 
             default:
