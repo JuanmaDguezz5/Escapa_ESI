@@ -24,34 +24,28 @@ void GuardarRegistroJugador(Ficheros *F, jugadores j) {
 }
 
 // Sobrescribe el archivo de objetos para guardar sus nuevas ubicaciones (inventario o sala)
+// Guarda la nueva ubicación de los objetos en partidas.txt
 void GuardarObjetosActualizados(Ficheros *F, objeto *arrayObjetos, int numObjetos) {
-    if (F->Objetos == NULL) return;
+    if (F->Partidas == NULL) return; 
 
     for (int i = 0; i < numObjetos; i++) {
-        // Evitamos guardar estructuras vacías de la memoria dinámica
         if(arrayObjetos[i].id_objeto[0] != '\0') {
-            fprintf(F->Objetos, "%s-%s-%s-%s\n", 
+            fprintf(F->Partidas, "OBJETO: %s-%s\n", 
                     arrayObjetos[i].id_objeto, 
-                    arrayObjetos[i].nombre,
-                    arrayObjetos[i].descripcion, 
                     arrayObjetos[i].lugar);
         }
     }
 }
 
-// Sobrescribe el archivo de conexiones para guardar las puertas que se han abierto
+// Guarda el estado de las puertas en partidas.txt
 void GuardarConexionesActualizadas(Ficheros *F, conexiones *arrayConexiones, int numConexiones) {
-    if (F->Conexiones == NULL) return;
+    if (F->Partidas == NULL) return; // Guardamos en el archivo de partida
 
     for (int i = 0; i < numConexiones; i++) {
-        // Evitamos guardar estructuras vacías
         if(arrayConexiones[i].id_conexion[0] != '\0') {
-            fprintf(F->Conexiones, "%s-%s-%s-%s-%s\n", 
+            fprintf(F->Partidas, "CONEXION: %s-%s\n", 
                     arrayConexiones[i].id_conexion, 
-                    arrayConexiones[i].id_origen,
-                    arrayConexiones[i].id_destino, 
-                    arrayConexiones[i].Estado, 
-                    arrayConexiones[i].condicion);
+                    arrayConexiones[i].Estado);
         }
     }
 }
