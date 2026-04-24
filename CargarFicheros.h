@@ -5,7 +5,7 @@
 
 // Nuevas firmas adaptadas a la arquitectura sin globales
 int CargarLoginUsuario(Ficheros *F, jugadores *jDestino);
-estado_partida CargarEstadoGuardado(Ficheros *F, puzle *arrayPuzles, int numPuzles);
+estado_partida CargarEstadoGuardado(Ficheros *F, puzle *arrayPuzles, int numPuzles, objeto *arrayObjetos, int numObjetos, conexiones *arrayConexiones, int numConexiones, int id_jugador_actual);
 
 // Las firmas de carga de arrays se mantienen igual porque ya funcionaban por parámetro
 void CargarConexiones (Ficheros *F, conexiones *arrayConexiones, int numConexiones);
