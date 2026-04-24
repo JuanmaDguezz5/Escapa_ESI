@@ -1,24 +1,50 @@
 #include "CargarFicheros.h"
 
 // Carga el estado guardado de la partida
-estado_partida CargarEstadoGuardado(Ficheros *F, puzle *arrayPuzles, int numPuzles) {
+// Carga el estado guardado de la partida
+estado_partida CargarEstadoGuardado(Ficheros *F, puzle *arrayPuzles, int numPuzles, objeto *arrayObjetos, int numObjetos, conexiones *arrayConexiones, int numConexiones, int id_jugador_actual) {
     estado_partida ep = {0, 0, ""};
     if (F->Partidas == NULL) return ep; 
     
     char linea[256];
+    int esMiPartida = 0; // Candado de seguridad
+
     while (fgets(linea, sizeof(linea), F->Partidas)) {
         linea[strcspn(linea, "\n")] = '\0';
         
         if (!strncmp(linea, "JUGADOR: ", 9)) {
             sscanf(linea, "JUGADOR: %d", &ep.id_jugador);
-        } else if (!strncmp(linea, "SALA: ", 6)) {
-            sscanf(linea, "SALA: %s", ep.id_sala_str);
-        } else if (!strncmp(linea, "PUZLE: ", 7)) {
-            char idPuzleBuscado[15];
-            if (sscanf(linea, "PUZLE: %[^-]-Resuelto", idPuzleBuscado) == 1) {
-                for (int i = 0; i < numPuzles; i++) {
-                    if (strcmp(arrayPuzles[i].id_puzle, idPuzleBuscado) == 0) {
-                        arrayPuzles[i].resuelto = 1;
+            
+            // Comprobamos si el guardado pertenece a quien está jugando
+            if (ep.id_jugador == id_jugador_actual) {
+                esMiPartida = 1; // Abrimos el candado
+            } else {
+                // No es su partida. Marcamos error (-1) y abortamos lectura.
+                ep.id_jugador = -1;
+                return ep;
+            }
+        } else if (esMiPartida == 1) { // Solo si el candado está abierto, leo los datos
+            if (!strncmp(linea, "SALA: ", 6)) {
+                sscanf(linea, "SALA: %s", ep.id_sala_str);
+            } else if (!strncmp(linea, "PUZLE: ", 7)) {
+                char idPuzle[15];
+                if (sscanf(linea, "PUZLE: %[^-]-Resuelto", idPuzle) == 1) {
+                    for (int i = 0; i < numPuzles; i++) {
+                        if (strcmp(arrayPuzles[i].id_puzle, idPuzle) == 0) arrayPuzles[i].resuelto = 1;
+                    }
+                }
+            } else if (!strncmp(linea, "OBJETO: ", 8)) {
+                char idObj[15], lugar[15];
+                if (sscanf(linea, "OBJETO: %[^-]-%s", idObj, lugar) == 2) {
+                    for (int i = 0; i < numObjetos; i++) {
+                        if (strcmp(arrayObjetos[i].id_objeto, idObj) == 0) strcpy(arrayObjetos[i].lugar, lugar);
+                    }
+                }
+            } else if (!strncmp(linea, "CONEXION: ", 10)) {
+                char idCon[15], estado[15];
+                if (sscanf(linea, "CONEXION: %[^-]-%s", idCon, estado) == 2) {
+                    for (int i = 0; i < numConexiones; i++) {
+                        if (strcmp(arrayConexiones[i].id_conexion, idCon) == 0) strcpy(arrayConexiones[i].Estado, estado);
                     }
                 }
             }
@@ -113,7 +139,7 @@ void CargarObjetos(Ficheros *F, objeto *arrayObjetos, int numObjetos) {
     }
 }
 
-// Carga las Conexiones (SALTANDO los nombres de las salas del .txt)
+// Carga las Conexiones (FORMATO ESTRICTO DE 5 CAMPOS)
 void CargarConexiones(Ficheros *F, conexiones *arrayConexiones, int numConexiones) {
     char linea[300];
     int i = 0;
@@ -122,18 +148,24 @@ void CargarConexiones(Ficheros *F, conexiones *arrayConexiones, int numConexione
         linea[strcspn(linea, "\r")] = '\0';
         if(strlen(linea) < 5) continue;
 
-        strcpy(arrayConexiones[i].id_conexion, strtok(linea, "-")); // C01
-        strcpy(arrayConexiones[i].id_origen, strtok(NULL, "-"));    // 01
-        strtok(NULL, "-");                                          // SALTAMOS Clase_teoria
-        strcpy(arrayConexiones[i].id_destino, strtok(NULL, "-"));   // 06
-        strtok(NULL, "-");                                          // SALTAMOS pasillo
+        // 1. ID Conexion
+        strcpy(arrayConexiones[i].id_conexion, strtok(linea, "-")); 
         
+        // 2. ID Origen
+        strcpy(arrayConexiones[i].id_origen, strtok(NULL, "-"));    
+        
+        // 3. ID Destino
+        strcpy(arrayConexiones[i].id_destino, strtok(NULL, "-"));   
+        
+        // 4. Estado
         char *estado = strtok(NULL, "-");
-        if(estado) strcpy(arrayConexiones[i].Estado, estado);       // Bloqueada
+        if(estado) strcpy(arrayConexiones[i].Estado, estado);       
         
+        // 5. Condicion (Objeto o Puzle)
         char *condicion = strtok(NULL, "-");
-        if(condicion) strcpy(arrayConexiones[i].condicion, condicion); // OB01
+        if(condicion) strcpy(arrayConexiones[i].condicion, condicion); 
         else strcpy(arrayConexiones[i].condicion, "0");
+        
         i++;
     }
 }
