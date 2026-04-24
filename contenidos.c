@@ -21,39 +21,53 @@ void describirSala(salas *salaActual) {
 /*
   Lista los elementos interactuables de la ubicacion actual.
  */
-void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones) { 
+
+void examinarSala(salas *salaActual, objeto *listaObjetos, int numObjetos, conexiones *listaConexiones, int numConexiones, salas *arraySalas, int numSalas) { 
     printf("Examinando la sala: %s...\n", salaActual->nombre);
     printf("Descripcion: %s\n", salaActual->descripcion);
 
     // 1. Listar Objetos en la sala
-    printf("Objetos en la sala:\n");
+    printf("\nObjetos en la sala:\n");
     int objetosEncontrados = 0;
     for (int i = 0; i < numObjetos; i++) {
+        if (listaObjetos[i].id_objeto[0] == '\0') continue;
         if (strcmp(listaObjetos[i].lugar, salaActual->id_sala) == 0) {
             printf("- %s: %s\n", listaObjetos[i].nombre, listaObjetos[i].descripcion);
             objetosEncontrados++;
         }
     }
     if (objetosEncontrados == 0) {
-        printf("No hay objetos visibles en esta sala.\n");
+        printf("- No hay objetos visibles en esta sala.\n");
     }
 
-    // 2. Listar conexiones disponibles
-    printf("SALIDAS VISIBLES:\n");
-    int conexionesEncontradas = 0;
+    // 2. Listar Salidas 
+    printf("\nSalidas visibles:\n");
+    int salidasEncontradas = 0;
     for (int i = 0; i < numConexiones; i++) {
+        if (listaConexiones[i].id_conexion[0] == '\0') continue;
+
         if (strcmp(listaConexiones[i].id_origen, salaActual->id_sala) == 0) {
-            conexionesEncontradas++;
-            if (strcmp(listaConexiones[i].Estado, "Abierta") == 0 || strcmp(listaConexiones[i].Estado, "Activa") == 0) {
-                printf("- Hacia %s (ABIERTA)\n", listaConexiones[i].id_destino);
-            } else {
-                printf("- Hacia %s (Bloqueada - Necesitas: %s)\n", listaConexiones[i].id_origen, listaConexiones[i].condicion);
+            
+            // --- NUEVO: Buscamos el nombre de la sala de destino ---
+            char nombreDestino[50] = "Desconocida";
+            for(int j = 0; j < numSalas; j++) {
+                if(strcmp(arraySalas[j].id_sala, listaConexiones[i].id_destino) == 0) {
+                    strcpy(nombreDestino, arraySalas[j].nombre);
+                    break;
+                }
             }
+            // --------------------------------------------------------
+
+            if (strcmp(listaConexiones[i].Estado, "Abierta") == 0 || strcmp(listaConexiones[i].Estado, "Activa") == 0) {
+                printf("- Hacia la sala %s (%s) [ABIERTA]\n", listaConexiones[i].id_destino, nombreDestino);
+            } else {
+                printf("- Hacia la sala %s (%s) [BLOQUEADA - Necesitas: %s]\n", listaConexiones[i].id_destino, nombreDestino, listaConexiones[i].condicion);
+            }
+            salidasEncontradas++;
         }
-    } 
-    
-    if (conexionesEncontradas == 0) {
-        printf("Parece que no hay salidas... Estas atrapado.\n");
+    }
+    if (salidasEncontradas == 0) {
+        printf("- No hay salidas aparentes.\n");
     }
 }
 
@@ -165,33 +179,63 @@ void mostrar_inventario(objeto *listaObjetos, int numObjetos) {
 /*
   Gestiona la interaccion con un puzle y desbloquea conexiones.
  */
-void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones) {
+void interactuarPuzle(puzle *puzleActual, conexiones *conexionesJuego, int numConexiones, objeto *listaObjetos, int numObjetos) {
     char respuestaUsuario[50];
-    printf("RETO: %s \n", puzleActual->descripcion);
+    
+    // Evitar que el jugador resuelva el mismo puzle dos veces
+    if (puzleActual->resuelto == 1) {
+        printf("\nYa has resuelto este puzle anteriormente.\n");
+        return;
+    }
+
+    printf("\nRETO: %s \n", puzleActual->descripcion);
     printf("Introduce tu respuesta: ");
-    scanf("%s", respuestaUsuario);
+    scanf("%49s", respuestaUsuario);
 
     if (strcmp(respuestaUsuario, puzleActual->solucion) == 0) {
-        printf("¡Respuesta correcta! El puzle ha sido resuelto.\n");
+        printf("\n¡Respuesta correcta! El puzle ha sido resuelto.\n");
         puzleActual->resuelto = 1; 
 
+        // 1. DESBLOQUEAR PUERTAS DIRECTAMENTE (Para el puzle final P07)
         for (int i = 0; i < numConexiones; i++) {
+            if (conexionesJuego[i].id_conexion[0] == '\0') continue;
             if (strcmp(conexionesJuego[i].condicion, puzleActual->id_puzle) == 0) {
-                strcpy(conexionesJuego[i].Estado, "Activa");
-                printf("Se ha escuchado un clic: La conexion a %s ahora esta abierta.\n", conexionesJuego[i].id_destino);            
+                strcpy(conexionesJuego[i].Estado, "Abierta");
+                printf("- ¡Se ha escuchado un clic! La conexion hacia la sala %s ahora esta ABIERTA.\n", conexionesJuego[i].id_destino);            
+            }
+        }
+
+        // 2. DAR EL OBJETO DIRECTAMENTE AL INVENTARIO
+        for (int i = 0; i < numObjetos; i++) {
+            if (listaObjetos[i].id_objeto[0] == '\0') continue;
+            
+            // Comparamos solo los primeros 3 caracteres (ej. "P05") por máxima seguridad
+            if (strncmp(listaObjetos[i].lugar, puzleActual->id_puzle, 3) == 0) {
+                
+                strcpy(listaObjetos[i].lugar, "inv"); // Va directo al inventario del jugador
+                
+                printf("- ¡Has conseguido un objeto secreto! Se ha anadido a tu inventario: %s\n", listaObjetos[i].nombre);
             }
         }
     } else {
-        printf("Respuesta incorrecta. Intentalo de nuevo.\n");
+        printf("\nRespuesta incorrecta. Intentalo de nuevo.\n");
     }
 }
 
-//////////////////// // Funciones de Inicialización de Memoria Dinámica ////////////////////
+//////////////////// Funciones de Inicialización de Memoria Dinámica ////////////////////
 
-salas* inicializarSalas(int numSalas) { return (salas *)malloc(numSalas * sizeof(salas)); }
-objeto* inicializarObjetos(int numObjetos) { return (objeto *)malloc(numObjetos * sizeof(objeto)); }
-conexiones* inicializarConexiones(int numConexiones) { return (conexiones *)malloc(numConexiones * sizeof(conexiones)); }
-puzle* inicializarPuzles(int numPuzles) { return (puzle *)malloc(numPuzles * sizeof(puzle)); }
+salas* inicializarSalas(int numSalas) { 
+    return (salas *)malloc((size_t)numSalas * sizeof(salas)); 
+}
+objeto* inicializarObjetos(int numObjetos) { 
+    return (objeto *)malloc((size_t)numObjetos * sizeof(objeto)); 
+}
+conexiones* inicializarConexiones(int numConexiones) { 
+    return (conexiones *)malloc((size_t)numConexiones * sizeof(conexiones)); 
+}
+puzle* inicializarPuzles(int numPuzles) { 
+    return (puzle *)malloc((size_t)numPuzles * sizeof(puzle)); 
+}
 
 /*
  Libera toda la memoria dinámica reservada
