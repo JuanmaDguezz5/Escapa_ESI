@@ -18,12 +18,12 @@ int AbrirFicherosLectura(Ficheros *F) {
 int AbrirFicherosEscritura(Ficheros *F) {
     F->Jugadores    = fopen("jugadores.txt", "a+"); 
     F->Salas        = NULL; 
-    F->Conexiones   = fopen("conexiones.txt", "w");
-    F->Objetos      = fopen("objetos.txt", "w");
-    F->Puzles       = NULL; // Los puzles base no se sobreescriben, guardamos su estado en Partidas
-    F->Partidas     = fopen("partidas.txt", "w");
+    F->Conexiones   = NULL; 
+    F->Objetos      = NULL; 
+    F->Puzles       = NULL; 
+    F->Partidas     = fopen("partidas.txt", "w"); 
 
-    if (!F->Partidas || !F->Conexiones || !F->Objetos || !F->Jugadores) {
+    if (!F->Partidas || !F->Jugadores) {
         printf("Error al abrir los ficheros para guardar.\n");
         return -1;
     }
