@@ -1,7 +1,0 @@
-OB01-Tarjeta_Teoria (OB01)-Tarjeta magnetica que abre el aula de teoria-P01
-OB02-Llave_Biblioteca (OB02)-Llave antigua que abre la puerta de la biblioteca-P02
-OB03-Tarjeta_Cafeteria (OB03)-Tarjeta magnetica que abre la cafeteria-P03
-OB04-Tarjeta_Practicas (OB04)-Tarjeta magnetica que abre el aula de practicas-P04
-OB05-Llave_Conserjeria (OB05)-Llave olvidada que abre la conserjeria-P05
-OB06-Llave_Salon (OB06)-Llave que abre el salon de actos-P06
-OB07-Llave_Exterior (OB07)-La llave maestra definitiva para escapar de la ESI-P07
