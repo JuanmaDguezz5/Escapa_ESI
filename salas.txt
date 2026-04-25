@@ -1,0 +1,13 @@
+01-Clase_teoria(01)-INICIAL-Un aula llena de mesas y sillas (Realiza el puzle P01).
+02-Clase_Practicas(02)-NORMAL-Un aula llena de con 4 mesas cada una con 4 ordenadores (Realiza el puzle P05).
+03-Biblioteca(03)-NORMAL-Una sala llena de estanterías con libros en su interior (Realiza el puzle P03).
+04-Cafeteria(04)-NORMAL-Una sala llena de mesas y sillas, hay diferentes utensilios de cocina (Realiza el puzle P04).
+05-Salon de actos(05)-NORMAL-Una gran sala con 12 filas de 20 butacas (Realiza el puzle P07).
+06-Hall de la ESI(06)-NORMAL-Sala con la puerta de salida.
+07-Pasillo_C0(07)-NORMAL-Pasillo con muchas aulas cerradas.
+08-Pasillo_Principal(08)-NORMAL-Gran pasillo con muchas vitrinas, mesas y sillas, Hay un sofa con un numero escrito... (Realiza el puzle P02).
+09-Escaleras(09)-NORMAL-Escaleras para subir a la planta 1 o bajar a la planta 0.
+10-Pasillo_planta01(010)-NORMAL-Pasillo principal de la planta superior de la ESI.
+11-Pasillo_E1(011)-NORMAL-Pasillo con muchas aulas cerradas.
+12-Consejeria(012)-NORMAL-Lugar con muchos objetos perdidos, papeles y muebles. Entre los papeles hay muchos con letras escritas: a, c, s, o (Realiza el puzle P06).
+13-Exterior(013)-SALIDA-Salida de la ESI donde hay muchas gallinas.

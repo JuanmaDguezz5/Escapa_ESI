@@ -1,0 +1,7 @@
+P01-Puzle_Pizarra-01-Palabra-Nombre del primer ordenador inventado-ENIAC
+P02-Puzle_Sofas-08-Codigo-El numero del sofa es 10, pasalo a binario-1010
+P03-Puzle_Libros-03-Palabra-Busca el libro de Verificacion Formal y mira quien es su autor/a-Esther
+P04-Puzle_cafeteria-04-Codigo-Pide a Roque el precio del menu de la cafeteria (NO PONGAS ',')-570
+P05-Puzle_Ordenadores-02-Codigo-Cuenta los ordenadores del aula y aniade dos ceros al final-1600
+P06-Puzle_Conserje-12-Palabra-Crea una palabra con las letras de los papeles-saco
+P07-Puzle_Butaca-05-Codigo-Cuenta el numero total de butacas y multiplicale el numero '1001' en decimal-2160
